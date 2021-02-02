@@ -3,14 +3,6 @@
  * Covid API: https://documenter.getpostman.com/view/10877427/SzYW2f8n?version=latest#287c16a2-d2b3-4de7-a45e-0455642c1a92
  */
 
-interface Covid {
-    
-}
-
-interface Country {
-
-}
-
 class Controller {
     /**
      * Display the country with the most covid-19 cases
@@ -19,7 +11,6 @@ class Controller {
     countryWithMostCases() {
         console.log("1) Country with most cases: ");
     }
-
 
     /**
      * Display the coutry's capital name (country's name) with the less cases.
@@ -31,6 +22,7 @@ class Controller {
 
     /**
      * Display the coutry's name that have no covid data.
+     * Some countries available in the restcountry API have no data (doesn't exist) in the covid API
      * The display must be nice, not a simple object/array (for example A, B, C ...)
      */
     async findCountriesWithoutCovidData() {
@@ -43,9 +35,9 @@ class Controller {
      * When you do a GET on localhost:5000/api/capitalToCovidCases this method must be called
      * This method will take as query parameter a country capital name and you need to return the number of death for this capital's country
      */
-    async capitalToCovidCases(req: Request, res: Response) {
+    async capitalToCovidCases(req, res) {
         
     }
 }
 
-export default Controller;
+module.exports = Controller;
