@@ -28,9 +28,8 @@ app.listen(port, () => {
 
 
 // for the question 4
-let start = new Date();
 axios.get('http://localhost:5000/api/capitalToCovidCases?capital=Bern', {
     headers: {
         'Content-Type': 'application/json',
     }
-}).then(r => console.log("\n4) Death in Switzerland: ", r.data, ` in: ${new Date() - start}`))
+}).then(r => console.log("\n4) Death in Switzerland: ", r.data))
