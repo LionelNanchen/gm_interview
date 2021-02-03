@@ -3,9 +3,7 @@
  * Covid API: https://documenter.getpostman.com/view/10877427/SzYW2f8n?version=latest#287c16a2-d2b3-4de7-a45e-0455642c1a92
  */
 
-import axios from "axios";
-import { Request, Response } from "express";
-
+const axios  = require('axios');
 class Controller {
     country = axios.create({
         baseURL: 'https://restcountries.eu/rest/v2',
@@ -26,10 +24,11 @@ class Controller {
      * The display can be a simple object/array
      */
     countryWithMostCases() {
+        let start = new Date();
         this.covid.get('status').then(r => {
             const list = r.data;
             const mostCases = list.reduce((acc, c) => c.cases > acc.cases ? c : acc);
-            console.log("1) Country with most cases: ", mostCases);
+            console.log("1) Country with most cases: ", mostCases, ` in: ${new Date() - start}`);
         });
     }
 
@@ -38,12 +37,13 @@ class Controller {
      * Display: country's capital (country's name)
      */
     capitalOfCountryWithLessCases() {
+        let start = new Date();
         this.covid.get('status').then(r => {
             const list = r.data;
             const lessCases = list.reduce((acc, c) => c.cases < acc.cases ? c : acc);
             this.country.get(`alpha/${lessCases.country}`).then(r => {
                 const country = r.data;
-                console.log("\n2) Capital of country with less cases: ", country.capital, ` (${country.name}) `);
+                console.log("\n2) Capital of country with less cases: ", country.capital, ` (${country.name}) `, ` in: ${new Date() - start}`);
             })
         });
     }
@@ -54,11 +54,12 @@ class Controller {
      * The display must be nice, not a simple object/array (for example A, B, C ...)
      */
     async findCountriesWithoutCovidData() {
+        let start = new Date();
         const countries = (await this.country.get('all')).data;
         const covids = (await this.covid.get('countries')).data;
 
         const countriesWithoutCovidData = countries.filter(c => covids.find(v => v.alpha2 === c.alpha2Code) === undefined);
-        console.log("\n3) Countries without covid data: ", countriesWithoutCovidData.reduce((acc, c) => acc + ", " + c.name, ""));
+        console.log("\n3) Countries without covid data: ", countriesWithoutCovidData.reduce((acc, c) => acc + ", " + c.name, ""), ` in: ${new Date() - start}`);
     }
 
     /**

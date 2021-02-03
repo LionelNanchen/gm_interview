@@ -1,6 +1,6 @@
-import axios from 'axios';
-import express, { Request, Response } from 'express';
-import Controller from './controller';
+const axios  = require('axios');
+const express = require('express');
+const Controller = require('./controller');
 
 const controller = new Controller();
 controller.countryWithMostCases();
@@ -28,8 +28,9 @@ app.listen(port, () => {
 
 
 // for the question 4
+let start = new Date();
 axios.get('http://localhost:5000/api/capitalToCovidCases?capital=Bern', {
     headers: {
         'Content-Type': 'application/json',
     }
-}).then(r => console.log("\n4) Death in Switzerland: ", r.data))
+}).then(r => console.log("\n4) Death in Switzerland: ", r.data, ` in: ${new Date() - start}`))
